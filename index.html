@@ -2,90 +2,93 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Check Your Score</title>
+<title>Result Checker</title>
 
 <style>
 body {
-    background: black;
-    color: #00ffcc;
-    font-family: monospace;
+    margin: 0;
+    height: 100vh;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    background: linear-gradient(135deg, #ffffff, #1b8f3a);
+    font-family: Calibri, Arial, sans-serif;
+    color: #0b3d1f;
+}
+
+.container {
     text-align: center;
+    background: rgba(255,255,255,0.9);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 80%;
+    max-width: 400px;
+}
+
+h2 {
+    font-family: "Times New Roman", serif;
 }
 
 input {
+    width: 90%;
     padding: 10px;
-    margin-top: 15px;
-    background: black;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
+    margin-top: 10px;
+    border: 1px solid #1b8f3a;
+    border-radius: 5px;
 }
 
 button {
     margin-top: 10px;
-    padding: 8px 16px;
-    background: #00ffcc;
+    padding: 10px 20px;
+    background: #1b8f3a;
+    color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 #output {
     margin-top: 20px;
-    font-size: 22px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 #watermark {
     position: fixed;
-    bottom: 10px;
-    right: 15px;
-    font-size: 12px;
-    color: rgba(0,255,204,0.4);
-    opacity: 0;
-    transition: opacity 2s;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: rgba(0,0,0,0.5);
 }
 </style>
 </head>
 
 <body>
 
-<h2>Enter your code to continue</h2>
+<div class="container">
+    <h2>Result Access Portal</h2>
+    <p>Enter your JAMß profile code or email to continue</p>
 
-<input type="text" placeholder="Type anything...">
-<br>
-<button onclick="check()">Check</button>
+    <input type="text" placeholder="Enter details here...">
+    <br>
+    <button onclick="check()">Continue</button>
 
-<div id="output"></div>
+    <div id="output"></div>
+</div>
+
 <div id="watermark">Edited by Rowen</div>
 
 <script>
 function check() {
     const output = document.getElementById("output");
-    output.innerHTML = "Fetching result...";
+    output.innerHTML = "Loading...";
 
     setTimeout(() => {
-        typeMessage("I just wanted you to know...\nJesus loves you 🌚");
-        document.getElementById("watermark").style.opacity = 1;
+        output.innerHTML = "I just wanted you to know ❤️<br>Jesus loves you 🌿";
     }, 2000);
-}
-
-function typeMessage(msg) {
-    let i = 0;
-    const output = document.getElementById("output");
-    output.innerHTML = "";
-
-    function typing() {
-        if (i < msg.length) {
-            output.innerHTML += msg.charAt(i) === "\n" ? "<br>" : msg.charAt(i);
-            i++;
-            setTimeout(typing, 40);
-        }
-    }
-
-    typing();
 }
 </script>
 
