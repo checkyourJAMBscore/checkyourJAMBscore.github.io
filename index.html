@@ -30,6 +30,27 @@ input {
     font-size: 18px;
     border: 2px solid #1b8f3a;
     border-radius: 8px;
+    outline: none;
+}
+
+input.error {
+    border-color: red;
+    animation: shake 0.3s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+#errorMsg {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
 }
 
 button {
@@ -83,9 +104,10 @@ button {
 <!-- Input Screen -->
 <div id="start">
     <h2>Enter your JAMß profile Code or phone number or email address to access your result</h2>
-    <input type="text" placeholder="Enter text...">
+    <input type="text" id="userInput" placeholder="Enter text...">
+    <div id="errorMsg">Please enter a valid phone number (11 digits), profile code (10 digits), or email</div>
     <br>
-    <button onclick="showMessage()">Continue</button>
+    <button onclick="validateAndContinue()">Continue</button>
 </div>
 
 <!-- Message Screen -->
@@ -95,18 +117,37 @@ button {
 </div>
 
 <script>
+function validateAndContinue() {
+    const input = document.getElementById("userInput");
+    const value = input.value.trim();
+    const errorMsg = document.getElementById("errorMsg");
+
+    const phoneRegex = /^\d{11}$/;
+    const profileRegex = /^\d{10}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (phoneRegex.test(value) || profileRegex.test(value) || emailRegex.test(value)) {
+        errorMsg.style.display = "none";
+        input.classList.remove("error");
+
+        // simulate "verifying..."
+        setTimeout(showMessage, 800);
+    } else {
+        errorMsg.style.display = "block";
+        input.classList.add("error");
+    }
+}
+
 function showMessage() {
     document.getElementById("start").style.display = "none";
     document.getElementById("messageScreen").style.display = "flex";
 
-    // animate main message
     setTimeout(() => {
         const msg = document.getElementById("message");
         msg.style.opacity = "1";
         msg.style.transform = "translateY(0)";
     }, 300);
 
-    // animate watermark AFTER message
     setTimeout(() => {
         const wm = document.getElementById("watermark");
         wm.style.opacity = "1";
